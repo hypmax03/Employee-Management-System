@@ -128,7 +128,9 @@ const EmployeeTable = ({
             <th scope="col">Salary</th>
             <th scope="col">Joined</th>
             <th scope="col">Status</th>
-            <th scope="col" style={{ textAlign: 'center', width: '120px' }}>Actions</th>
+            <th scope="col" style={{ textAlign: 'center', width: isAdmin ? '120px' : '70px' }}>
+              {isAdmin ? 'Actions' : 'View'}
+            </th>
           </tr>
         </thead>
         <tbody>

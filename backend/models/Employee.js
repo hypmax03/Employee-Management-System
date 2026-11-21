@@ -93,6 +93,10 @@ const employeeSchema = new mongoose.Schema(
       trim: true,
       default: ''
     },
+    role: {
+      type: String,
+      default: 'employee'
+    },
     createdBy: {
       type: mongoose.Schema.Types.ObjectId,
       ref: 'User'

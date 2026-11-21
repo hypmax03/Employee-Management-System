@@ -69,7 +69,7 @@ const Navbar = ({ onOpenAddModal }) => {
               color: '#8e8e99',
               fontWeight: 500
             }}>
-              Admin Portal
+              {user?.role === 'employee' ? 'Employee Portal' : 'Admin Portal'}
             </div>
           </div>
         </Link>
@@ -126,11 +126,11 @@ const Navbar = ({ onOpenAddModal }) => {
                 </span>
                 <span style={{
                   fontSize: '0.65rem',
-                  color: '#facc15',
+                  color: user?.role === 'employee' ? '#4ade80' : '#facc15',
                   textTransform: 'uppercase',
                   fontWeight: 700
                 }}>
-                  {user?.role || 'employee'}
+                  {user?.role === 'employee' ? 'Employee' : (user?.role || 'Admin')}
                 </span>
               </div>
             </div>

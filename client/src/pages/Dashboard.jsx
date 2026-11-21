@@ -171,8 +171,68 @@ const Dashboard = () => {
         margin: '0 auto',
         padding: '1.75rem 1.5rem'
       }}>
-        {/* Stats */}
-        <StatsCards stats={stats} />
+        {/* Workforce Overview (Admin) or Employee Profile Banner (Staff) */}
+        {isAdmin ? (
+          <StatsCards stats={stats} />
+        ) : (
+          <div style={{
+            backgroundColor: '#141419',
+            border: '1px solid #282836',
+            borderRadius: '10px',
+            padding: '1.25rem 1.5rem',
+            marginBottom: '1.5rem',
+            display: 'flex',
+            flexWrap: 'wrap',
+            alignItems: 'center',
+            justifyContent: 'space-between',
+            gap: '1rem'
+          }}>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
+              <div style={{
+                width: '46px',
+                height: '46px',
+                borderRadius: '8px',
+                backgroundColor: 'rgba(74, 222, 128, 0.12)',
+                border: '1px solid rgba(74, 222, 128, 0.3)',
+                color: '#4ade80',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                fontWeight: 700,
+                fontSize: '1.1rem'
+              }}>
+                {user?.name ? user.name.charAt(0).toUpperCase() : 'E'}
+              </div>
+              <div>
+                <div style={{ fontSize: '1.1rem', fontWeight: 700, color: '#ffffff' }}>
+                  {user?.name || 'Employee'}
+                </div>
+                <div style={{ fontSize: '0.8rem', color: '#9e9eb0', marginTop: '0.15rem' }}>
+                  <span style={{ color: '#facc15', fontFamily: 'var(--font-mono)', fontWeight: 600 }}>
+                    {user?.employeeId || 'Staff ID'}
+                  </span>
+                  {user?.department && <span> &bull; {user.department}</span>}
+                  {user?.position && <span> &bull; {user.position}</span>}
+                </div>
+              </div>
+            </div>
+
+            <div style={{
+              display: 'flex',
+              alignItems: 'center',
+              gap: '0.5rem',
+              backgroundColor: 'rgba(74, 222, 128, 0.08)',
+              border: '1px solid rgba(74, 222, 128, 0.25)',
+              borderRadius: '6px',
+              padding: '0.45rem 0.85rem',
+              fontSize: '0.78rem',
+              color: '#4ade80',
+              fontWeight: 500
+            }}>
+              <span>Employee Portal (Read-Only Directory Access)</span>
+            </div>
+          </div>
+        )}
 
         {/* Toolbar */}
         <div style={{
