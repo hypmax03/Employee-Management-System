@@ -10,10 +10,10 @@ const generateToken = (id) => {
   );
 };
 
-// register new user
+// register new user (defaults strictly to employee role)
 const register = async (req, res, next) => {
   try {
-    const { name, email, password, role } = req.body;
+    const { name, email, password } = req.body;
 
     const existingUser = await User.findOne({ email: email.toLowerCase().trim() });
     if (existingUser) {
@@ -24,11 +24,12 @@ const register = async (req, res, next) => {
       });
     }
 
+    // Public registrations are assigned employee role by default
     const user = await User.create({
       name: name.trim(),
       email: email.toLowerCase().trim(),
       password,
-      role: role || 'admin'
+      role: 'employee'
     });
 
     const token = generateToken(user._id);

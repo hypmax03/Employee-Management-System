@@ -61,10 +61,10 @@ export const AuthProvider = ({ children }) => {
     }
   };
 
-  const register = async (name, email, password, role = 'admin') => {
+  const register = async (name, email, password) => {
     setAuthError(null);
     try {
-      const res = await authService.register({ name, email, password, role });
+      const res = await authService.register({ name, email, password });
       if (res.success && res.token) {
         localStorage.setItem('apex_ems_token', res.token);
         localStorage.setItem('apex_ems_user', JSON.stringify(res.user));

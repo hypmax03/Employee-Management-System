@@ -28,8 +28,8 @@ const userSchema = new mongoose.Schema(
     },
     role: {
       type: String,
-      enum: ['admin', 'manager', 'hr'],
-      default: 'admin'
+      enum: ['admin', 'manager', 'hr', 'employee'],
+      default: 'employee'
     }
   },
   {

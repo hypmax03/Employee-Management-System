@@ -8,7 +8,6 @@ const Register = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
-  const [role, setRole] = useState('admin');
   const [showPassword, setShowPassword] = useState(false);
   const [loading, setLoading] = useState(false);
   const [errorMessage, setErrorMessage] = useState('');
@@ -35,7 +34,7 @@ const Register = () => {
     }
 
     setLoading(true);
-    const result = await register(name, email, password, role);
+    const result = await register(name, email, password);
     setLoading(false);
 
     if (result.success) {
@@ -90,7 +89,7 @@ const Register = () => {
             Create Account
           </h1>
           <p style={{ fontSize: '0.84rem', color: '#8d8d9b' }}>
-            Register as an Administrator
+            Register Employee Account
           </p>
         </div>
 
@@ -206,45 +205,6 @@ const Register = () => {
                 <span>{fieldErrors.email}</span>
               </div>
             )}
-          </div>
-
-          {/* Role */}
-          <div style={{ marginBottom: '1.1rem' }}>
-            <label
-              htmlFor="reg-role"
-              style={{
-                display: 'block',
-                fontSize: '0.82rem',
-                fontWeight: 600,
-                color: '#d4d4d8',
-                marginBottom: '0.35rem'
-              }}
-            >
-              Role
-            </label>
-            <div style={{ position: 'relative' }}>
-              <select
-                id="reg-role"
-                name="role"
-                value={role}
-                onChange={(e) => setRole(e.target.value)}
-                style={{ paddingLeft: '2.5rem' }}
-              >
-                <option value="admin">Admin</option>
-                <option value="manager">Manager</option>
-                <option value="hr">HR</option>
-              </select>
-              <Shield
-                size={16}
-                color="#facc15"
-                style={{
-                  position: 'absolute',
-                  left: '12px',
-                  top: '50%',
-                  transform: 'translateY(-50%)'
-                }}
-              />
-            </div>
           </div>
 
           {/* Password */}
@@ -372,7 +332,7 @@ const Register = () => {
             ) : (
               <>
                 <UserPlus size={16} />
-                <span>Register</span>
+                <span>Register as Employee</span>
               </>
             )}
           </button>
