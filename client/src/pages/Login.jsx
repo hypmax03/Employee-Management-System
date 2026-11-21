@@ -31,18 +31,6 @@ const Login = () => {
     }
   };
 
-  const fillDemoAdmin = () => {
-    setEmail('admin@apex.com');
-    setPassword('admin123');
-    setErrorMessage('');
-  };
-
-  const fillDemoEmployee = () => {
-    setEmail('EMP-1001');
-    setPassword('employee123');
-    setErrorMessage('');
-  };
-
   return (
     <div style={{
       minHeight: '100vh',
@@ -87,63 +75,6 @@ const Login = () => {
           <p style={{ fontSize: '0.84rem', color: '#8d8d9b' }}>
             Admin & Employee Portal
           </p>
-        </div>
-
-        {/* Demo Helper with both Admin and Employee options */}
-        <div style={{
-          backgroundColor: '#191924',
-          border: '1px solid #2e2e3d',
-          borderRadius: '8px',
-          padding: '0.85rem 1rem',
-          marginBottom: '1.25rem'
-        }}>
-          <div style={{ fontSize: '0.76rem', fontWeight: 600, color: '#facc15', marginBottom: '0.5rem' }}>
-            Quick Demo Credentials:
-          </div>
-          <div style={{ display: 'flex', flexDirection: 'column', gap: '0.45rem' }}>
-            <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-              <span style={{ fontSize: '0.74rem', color: '#b4b4c4' }}>
-                Admin: <strong>admin@apex.com</strong> / admin123
-              </span>
-              <button
-                type="button"
-                onClick={fillDemoAdmin}
-                style={{
-                  backgroundColor: 'rgba(250, 204, 21, 0.15)',
-                  border: '1px solid rgba(250, 204, 21, 0.35)',
-                  color: '#facc15',
-                  fontSize: '0.72rem',
-                  fontWeight: 600,
-                  padding: '0.2rem 0.5rem',
-                  borderRadius: '4px',
-                  cursor: 'pointer'
-                }}
-              >
-                Fill Admin
-              </button>
-            </div>
-            <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-              <span style={{ fontSize: '0.74rem', color: '#b4b4c4' }}>
-                Employee: <strong>EMP-1001</strong> / employee123
-              </span>
-              <button
-                type="button"
-                onClick={fillDemoEmployee}
-                style={{
-                  backgroundColor: 'rgba(250, 204, 21, 0.15)',
-                  border: '1px solid rgba(250, 204, 21, 0.35)',
-                  color: '#facc15',
-                  fontSize: '0.72rem',
-                  fontWeight: 600,
-                  padding: '0.2rem 0.5rem',
-                  borderRadius: '4px',
-                  cursor: 'pointer'
-                }}
-              >
-                Fill Employee
-              </button>
-            </div>
-          </div>
         </div>
 
         {/* Error Alert */}
