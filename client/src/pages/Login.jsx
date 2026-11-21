@@ -27,13 +27,19 @@ const Login = () => {
     if (result.success) {
       navigate(from, { replace: true });
     } else {
-      setErrorMessage(result.message || 'Invalid email or password');
+      setErrorMessage(result.message || 'Invalid email/ID or password');
     }
   };
 
   const fillDemoAdmin = () => {
     setEmail('admin@apex.com');
     setPassword('admin123');
+    setErrorMessage('');
+  };
+
+  const fillDemoEmployee = () => {
+    setEmail('EMP-1001');
+    setPassword('employee123');
     setErrorMessage('');
   };
 
@@ -48,7 +54,7 @@ const Login = () => {
     }}>
       <div style={{
         width: '100%',
-        maxWidth: '420px',
+        maxWidth: '430px',
         backgroundColor: '#131318',
         border: '1px solid #282835',
         borderRadius: '14px',
@@ -56,7 +62,7 @@ const Login = () => {
         boxShadow: '0 10px 30px rgba(0, 0, 0, 0.6)'
       }}>
         {/* Header */}
-        <div style={{ textAlign: 'center', marginBottom: '1.75rem' }}>
+        <div style={{ textAlign: 'center', marginBottom: '1.5rem' }}>
           <div style={{
             width: '46px',
             height: '46px',
@@ -79,46 +85,65 @@ const Login = () => {
             Sign In
           </h1>
           <p style={{ fontSize: '0.84rem', color: '#8d8d9b' }}>
-            Employee Management System
+            Admin & Employee Portal
           </p>
         </div>
 
-        {/* Demo Helper */}
+        {/* Demo Helper with both Admin and Employee options */}
         <div style={{
           backgroundColor: '#191924',
           border: '1px solid #2e2e3d',
           borderRadius: '8px',
-          padding: '0.75rem 0.9rem',
-          marginBottom: '1.25rem',
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'space-between',
-          gap: '0.5rem'
+          padding: '0.85rem 1rem',
+          marginBottom: '1.25rem'
         }}>
-          <div>
-            <div style={{ fontSize: '0.78rem', fontWeight: 600, color: '#facc15' }}>
-              Demo Credentials
+          <div style={{ fontSize: '0.76rem', fontWeight: 600, color: '#facc15', marginBottom: '0.5rem' }}>
+            Quick Demo Credentials:
+          </div>
+          <div style={{ display: 'flex', flexDirection: 'column', gap: '0.45rem' }}>
+            <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+              <span style={{ fontSize: '0.74rem', color: '#b4b4c4' }}>
+                Admin: <strong>admin@apex.com</strong> / admin123
+              </span>
+              <button
+                type="button"
+                onClick={fillDemoAdmin}
+                style={{
+                  backgroundColor: 'rgba(250, 204, 21, 0.15)',
+                  border: '1px solid rgba(250, 204, 21, 0.35)',
+                  color: '#facc15',
+                  fontSize: '0.72rem',
+                  fontWeight: 600,
+                  padding: '0.2rem 0.5rem',
+                  borderRadius: '4px',
+                  cursor: 'pointer'
+                }}
+              >
+                Fill Admin
+              </button>
             </div>
-            <div style={{ fontSize: '0.74rem', color: '#9e9eb0' }}>
-              admin@apex.com / admin123
+            <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+              <span style={{ fontSize: '0.74rem', color: '#b4b4c4' }}>
+                Employee: <strong>EMP-1001</strong> / employee123
+              </span>
+              <button
+                type="button"
+                onClick={fillDemoEmployee}
+                style={{
+                  backgroundColor: 'rgba(250, 204, 21, 0.15)',
+                  border: '1px solid rgba(250, 204, 21, 0.35)',
+                  color: '#facc15',
+                  fontSize: '0.72rem',
+                  fontWeight: 600,
+                  padding: '0.2rem 0.5rem',
+                  borderRadius: '4px',
+                  cursor: 'pointer'
+                }}
+              >
+                Fill Employee
+              </button>
             </div>
           </div>
-          <button
-            type="button"
-            onClick={fillDemoAdmin}
-            style={{
-              backgroundColor: 'rgba(250, 204, 21, 0.15)',
-              border: '1px solid rgba(250, 204, 21, 0.35)',
-              color: '#facc15',
-              fontSize: '0.74rem',
-              fontWeight: 600,
-              padding: '0.3rem 0.6rem',
-              borderRadius: '4px',
-              cursor: 'pointer'
-            }}
-          >
-            Auto Fill
-          </button>
         </div>
 
         {/* Error Alert */}
@@ -142,7 +167,7 @@ const Login = () => {
 
         {/* Form */}
         <form onSubmit={handleSubmit}>
-          {/* Email */}
+          {/* Email or Employee ID */}
           <div style={{ marginBottom: '1.25rem' }}>
             <label
               htmlFor="login-email"
@@ -154,11 +179,11 @@ const Login = () => {
                 marginBottom: '0.35rem'
               }}
             >
-              Email <span style={{ color: '#facc15' }}>*</span>
+              Email or Employee ID <span style={{ color: '#facc15' }}>*</span>
             </label>
             <div style={{ position: 'relative' }}>
               <input
-                type="email"
+                type="text"
                 id="login-email"
                 name="email"
                 value={email}
@@ -168,7 +193,7 @@ const Login = () => {
                 }}
                 required
                 autoComplete="username"
-                placeholder="admin@apex.com"
+                placeholder="admin@apex.com or EMP-1001"
                 style={{ paddingLeft: '2.5rem' }}
               />
               <Mail
@@ -184,7 +209,7 @@ const Login = () => {
             </div>
             <div className="error-msg">
               <AlertCircle size={12} />
-              <span>Enter a valid email address</span>
+              <span>Enter your work email or employee ID</span>
             </div>
           </div>
 
@@ -281,7 +306,7 @@ const Login = () => {
           fontSize: '0.84rem',
           color: '#8e8e9b'
         }}>
-          Don't have an account?{' '}
+          Don't have an administrator account?{' '}
           <Link
             to="/register"
             style={{

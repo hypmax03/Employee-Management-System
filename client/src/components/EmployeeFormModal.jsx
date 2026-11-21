@@ -28,7 +28,8 @@ const EmployeeFormModal = ({ isOpen, onClose, onSubmit, employee = null }) => {
     salary: '',
     dateOfJoining: new Date().toISOString().split('T')[0],
     status: 'Active',
-    address: ''
+    address: '',
+    password: ''
   };
 
   const [formData, setFormData] = useState(initialFormData);
@@ -51,7 +52,8 @@ const EmployeeFormModal = ({ isOpen, onClose, onSubmit, employee = null }) => {
           ? new Date(employee.dateOfJoining).toISOString().split('T')[0]
           : new Date().toISOString().split('T')[0],
         status: employee.status || 'Active',
-        address: employee.address || ''
+        address: employee.address || '',
+        password: ''
       });
     } else {
       setFormData(initialFormData);
@@ -433,6 +435,22 @@ const EmployeeFormModal = ({ isOpen, onClose, onSubmit, employee = null }) => {
                 <AlertCircle size={12} />
                 <span>{serverFieldErrors.employeeId || 'Invalid ID'}</span>
               </div>
+            </div>
+
+            {/* Portal Password */}
+            <div>
+              <label htmlFor="emp-password" style={{ display: 'block', fontSize: '0.82rem', fontWeight: 600, color: '#d4d4d8', marginBottom: '0.35rem' }}>
+                Portal Login Password <span style={{ fontSize: '0.72rem', color: '#8e8e98' }}>{isEdit ? '(Leave blank to keep current)' : '(Default: employee123)'}</span>
+              </label>
+              <input
+                type="password"
+                id="emp-password"
+                name="password"
+                value={formData.password}
+                onChange={handleChange}
+                placeholder={isEdit ? "Leave blank to keep unchanged" : "employee123"}
+                autoComplete="new-password"
+              />
             </div>
           </div>
 

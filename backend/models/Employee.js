@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+const bcrypt = require('bcryptjs');
 
 const employeeSchema = new mongoose.Schema(
   {
@@ -31,6 +32,12 @@ const employeeSchema = new mongoose.Schema(
         /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/,
         'Please provide a valid email address'
       ]
+    },
+    password: {
+      type: String,
+      default: 'employee123',
+      minlength: [6, 'Password must be at least 6 characters'],
+      select: false
     },
     phone: {
       type: String,
@@ -97,6 +104,22 @@ const employeeSchema = new mongoose.Schema(
     toObject: { virtuals: true }
   }
 );
+
+// Hash employee password before saving
+employeeSchema.pre('save', async function (next) {
+  if (!this.isModified('password')) {
+    return next();
+  }
+  const salt = await bcrypt.genSalt(10);
+  this.password = await bcrypt.hash(this.password, salt);
+  next();
+});
+
+// Compare password
+employeeSchema.methods.matchPassword = async function (enteredPassword) {
+  if (!this.password) return enteredPassword === 'employee123';
+  return await bcrypt.compare(enteredPassword, this.password);
+};
 
 // Virtual property for full name
 employeeSchema.virtual('fullName').get(function () {

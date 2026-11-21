@@ -49,13 +49,12 @@ const validateRegister = (req, res, next) => {
 
 // validate login
 const validateLogin = (req, res, next) => {
-  const { email, password } = req.body;
+  const identifier = (req.body.email || req.body.identifier || req.body.employeeId || '').trim();
+  const { password } = req.body;
   const errors = {};
 
-  if (!email || typeof email !== 'string' || email.trim().length === 0) {
-    errors.email = 'Email is required';
-  } else if (!emailRegex.test(email.trim())) {
-    errors.email = 'Please enter a valid email format';
+  if (!identifier) {
+    errors.email = 'Email or Employee ID is required';
   }
 
   if (!password || typeof password !== 'string' || password.trim().length === 0) {

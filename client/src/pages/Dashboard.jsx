@@ -7,6 +7,7 @@ import ViewEmployeeModal from '../components/ViewEmployeeModal';
 import DeleteConfirmModal from '../components/DeleteConfirmModal';
 import Toast from '../components/Toast';
 import { employeeService } from '../services/api';
+import { useAuth } from '../context/AuthContext';
 import { Search, Plus, RefreshCw } from 'lucide-react';
 
 const DEPARTMENTS = [
@@ -23,6 +24,9 @@ const DEPARTMENTS = [
 const STATUSES = ['All', 'Active', 'On Leave', 'Terminated'];
 
 const Dashboard = () => {
+  const { user } = useAuth();
+  const isAdmin = user?.role !== 'employee';
+
   const [employees, setEmployees] = useState([]);
   const [stats, setStats] = useState({});
   const [loading, setLoading] = useState(true);
@@ -263,16 +267,18 @@ const Dashboard = () => {
               <RefreshCw size={15} className={loading ? 'loading-spinner' : ''} />
             </button>
 
-            {/* Add Employee */}
-            <button
-              type="button"
-              onClick={handleOpenAdd}
-              className="btn-primary"
-              style={{ minHeight: '40px' }}
-            >
-              <Plus size={16} />
-              <span>Add Employee</span>
-            </button>
+            {/* Add Employee (Admin only) */}
+            {isAdmin && (
+              <button
+                type="button"
+                onClick={handleOpenAdd}
+                className="btn-primary"
+                style={{ minHeight: '40px' }}
+              >
+                <Plus size={16} />
+                <span>Add Employee</span>
+              </button>
+            )}
           </div>
         </div>
 
@@ -280,6 +286,7 @@ const Dashboard = () => {
         <EmployeeTable
           employees={employees}
           loading={loading}
+          isAdmin={isAdmin}
           onView={handleOpenView}
           onEdit={handleOpenEdit}
           onDelete={handleOpenDelete}

@@ -4,6 +4,7 @@ import { Eye, Edit2, Trash2, Mail, Search } from 'lucide-react';
 const EmployeeTable = ({
   employees = [],
   loading = false,
+  isAdmin = true,
   onView,
   onEdit,
   onDelete,
@@ -239,25 +240,29 @@ const EmployeeTable = ({
                     <Eye size={16} />
                   </button>
 
-                  <button
-                    type="button"
-                    onClick={() => onEdit(emp)}
-                    className="btn-icon"
-                    title="Edit record"
-                    aria-label={`Edit ${emp.firstName} ${emp.lastName}`}
-                  >
-                    <Edit2 size={16} />
-                  </button>
+                  {isAdmin && (
+                    <>
+                      <button
+                        type="button"
+                        onClick={() => onEdit(emp)}
+                        className="btn-icon"
+                        title="Edit record"
+                        aria-label={`Edit ${emp.firstName} ${emp.lastName}`}
+                      >
+                        <Edit2 size={16} />
+                      </button>
 
-                  <button
-                    type="button"
-                    onClick={() => onDelete(emp)}
-                    className="btn-icon btn-icon-danger"
-                    title="Delete record"
-                    aria-label={`Delete ${emp.firstName} ${emp.lastName}`}
-                  >
-                    <Trash2 size={16} />
-                  </button>
+                      <button
+                        type="button"
+                        onClick={() => onDelete(emp)}
+                        className="btn-icon btn-icon-danger"
+                        title="Delete record"
+                        aria-label={`Delete ${emp.firstName} ${emp.lastName}`}
+                      >
+                        <Trash2 size={16} />
+                      </button>
+                    </>
+                  )}
                 </div>
               </td>
             </tr>

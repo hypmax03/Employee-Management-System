@@ -111,7 +111,8 @@ const createEmployee = async (req, res, next) => {
       salary,
       dateOfJoining,
       status,
-      address
+      address,
+      password
     } = req.body;
 
     const existingEmail = await Employee.findOne({ email: email.toLowerCase().trim() });
@@ -142,6 +143,7 @@ const createEmployee = async (req, res, next) => {
       firstName: firstName.trim(),
       lastName: lastName.trim(),
       email: email.toLowerCase().trim(),
+      password: (req.body.password && req.body.password.trim()) || 'employee123',
       phone: phone.trim(),
       department: department.trim(),
       position: position.trim(),
@@ -185,7 +187,8 @@ const updateEmployee = async (req, res, next) => {
       salary,
       dateOfJoining,
       status,
-      address
+      address,
+      password
     } = req.body;
 
     if (email && email.toLowerCase().trim() !== employee.email) {
@@ -226,6 +229,7 @@ const updateEmployee = async (req, res, next) => {
     if (dateOfJoining) employee.dateOfJoining = dateOfJoining;
     if (status) employee.status = status;
     if (address !== undefined) employee.address = address.trim();
+    if (password && password.trim().length >= 6) employee.password = password.trim();
     if (employeeId) employee.employeeId = employeeId.trim().toUpperCase();
 
     await employee.save();

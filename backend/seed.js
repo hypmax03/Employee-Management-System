@@ -11,6 +11,7 @@ const sampleEmployees = [
     firstName: 'Marcus',
     lastName: 'Vance',
     email: 'marcus.vance@apexems.com',
+    password: 'employee123',
     phone: '+1 555-234-8901',
     department: 'Engineering',
     position: 'Backend Developer',
@@ -24,6 +25,7 @@ const sampleEmployees = [
     firstName: 'Elena',
     lastName: 'Rostova',
     email: 'elena.rostova@apexems.com',
+    password: 'employee123',
     phone: '+1 555-872-4411',
     department: 'Product & Design',
     position: 'UI/UX Designer',
@@ -37,6 +39,7 @@ const sampleEmployees = [
     firstName: 'Devon',
     lastName: 'Chen',
     email: 'devon.chen@apexems.com',
+    password: 'employee123',
     phone: '+1 555-431-7729',
     department: 'Engineering',
     position: 'Frontend Developer',
@@ -50,6 +53,7 @@ const sampleEmployees = [
     firstName: 'Amara',
     lastName: 'Okonkwo',
     email: 'amara.okonkwo@apexems.com',
+    password: 'employee123',
     phone: '+1 555-667-3120',
     department: 'Human Resources',
     position: 'HR Executive',
@@ -63,6 +67,7 @@ const sampleEmployees = [
     firstName: 'Julian',
     lastName: 'Sterling',
     email: 'julian.sterling@apexems.com',
+    password: 'employee123',
     phone: '+1 555-901-4456',
     department: 'Finance & Accounting',
     position: 'Accountant',
@@ -76,6 +81,7 @@ const sampleEmployees = [
     firstName: 'Sophia',
     lastName: 'Rodriguez',
     email: 'sophia.rodriguez@apexems.com',
+    password: 'employee123',
     phone: '+1 555-312-9988',
     department: 'Marketing',
     position: 'Marketing Specialist',
@@ -89,6 +95,7 @@ const sampleEmployees = [
     firstName: 'Tariq',
     lastName: 'Mansoor',
     email: 'tariq.mansoor@apexems.com',
+    password: 'employee123',
     phone: '+1 555-789-1123',
     department: 'Sales',
     position: 'Sales Representative',
@@ -102,6 +109,7 @@ const sampleEmployees = [
     firstName: 'Chloe',
     lastName: 'Dubois',
     email: 'chloe.dubois@apexems.com',
+    password: 'employee123',
     phone: '+1 555-456-7812',
     department: 'Customer Operations',
     position: 'Support Specialist',
@@ -144,6 +152,16 @@ const seedDatabase = async () => {
     } else {
       console.log(`Database already has ${count} employees`);
     }
+
+    // ensure all employees have password
+    const bcrypt = require('bcryptjs');
+    const existingEmployees = await Employee.find({});
+    for (const emp of existingEmployees) {
+      const salt = await bcrypt.genSalt(10);
+      const hashedPassword = await bcrypt.hash('employee123', salt);
+      await Employee.findByIdAndUpdate(emp._id, { password: hashedPassword });
+    }
+    console.log(`Verified login credentials for ${existingEmployees.length} employees (default password: employee123)`);
 
     console.log('Database seeding finished');
     process.exit(0);

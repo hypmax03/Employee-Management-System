@@ -1,5 +1,6 @@
 const jwt = require('jsonwebtoken');
 const User = require('../models/User');
+const Employee = require('../models/Employee');
 
 const protect = async (req, res, next) => {
   let token;
@@ -14,7 +15,7 @@ const protect = async (req, res, next) => {
   if (!token) {
     return res.status(401).json({
       success: false,
-      message: 'Access denied. No authentication token provided.'
+      message: 'Access denied. No token provided.'
     });
   }
 
@@ -23,21 +24,37 @@ const protect = async (req, res, next) => {
       token,
       process.env.JWT_SECRET || 'super_secret_apex_ems_jwt_key_2026_secure'
     );
-    
+
+    // 1. Check if token belongs to User (admin/manager/hr)
     const user = await User.findById(decoded.id).select('-password');
-    if (!user) {
-      return res.status(401).json({
-        success: false,
-        message: 'The user belonging to this token no longer exists.'
-      });
+    if (user) {
+      req.user = user;
+      return next();
     }
 
-    req.user = user;
-    next();
+    // 2. Check if token belongs to Employee
+    const employee = await Employee.findById(decoded.id).select('-password');
+    if (employee) {
+      req.user = {
+        _id: employee._id,
+        id: employee._id,
+        name: employee.fullName,
+        email: employee.email,
+        role: 'employee',
+        employeeId: employee.employeeId,
+        department: employee.department
+      };
+      return next();
+    }
+
+    return res.status(401).json({
+      success: false,
+      message: 'Account not found or deleted.'
+    });
   } catch (error) {
     return res.status(401).json({
       success: false,
-      message: 'Invalid or expired token. Please log in again.'
+      message: 'Invalid or expired token.'
     });
   }
 };

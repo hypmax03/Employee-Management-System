@@ -82,8 +82,8 @@ const Navbar = ({ onOpenAddModal }) => {
             gap: '1rem',
             flexWrap: 'wrap'
           }}>
-            {/* Add Employee Button */}
-            {onOpenAddModal && (
+            {/* Add Employee Button (admins/managers only) */}
+            {user?.role !== 'employee' && onOpenAddModal && (
               <button
                 type="button"
                 onClick={onOpenAddModal}
@@ -122,7 +122,7 @@ const Navbar = ({ onOpenAddModal }) => {
               </div>
               <div style={{ display: 'flex', flexDirection: 'column' }}>
                 <span style={{ fontSize: '0.82rem', fontWeight: 600, color: '#f4f4f6' }}>
-                  {user?.name || 'Admin'}
+                  {user?.name || 'Staff'}
                 </span>
                 <span style={{
                   fontSize: '0.65rem',
@@ -130,7 +130,7 @@ const Navbar = ({ onOpenAddModal }) => {
                   textTransform: 'uppercase',
                   fontWeight: 700
                 }}>
-                  {user?.role || 'admin'}
+                  {user?.role || 'employee'}
                 </span>
               </div>
             </div>
